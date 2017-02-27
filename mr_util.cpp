@@ -100,6 +100,13 @@ void MrToolbox::redundant_remover(char* key, int keybytes, char* values, int nva
         kv -> add(splitted_key, separator_pos, splitted_val, keybytes - separator_pos - 1);
 }
 
+void MrToolbox::set_mr_params(MapReduce* mr, int pagesize, int timer, int verbosity, int outofcore) {
+	mr -> memsize = pagesize;
+	mr -> verbosity = verbosity;
+	mr -> timer = timer;
+	mr -> outofcore = outofcore;
+}
+
 void MrToolbox::set_mr_params(MapReduce* mr, int pagesize) {
 	//if (pagesize > 1024) pagesize = 1024;
 	mr -> verbosity = 0;

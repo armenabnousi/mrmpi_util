@@ -23,5 +23,6 @@ public:
 	void static remove_redundant(MapReduce* mr);
 	void static redundant_agglomerator(char* key, int keybytes, char* values, int nvalues, int* valuebytes, KeyValue* kv, void* ptr);
 	void static redundant_remover(char* key, int keybytes, char* values, int nvalues, int* valuebytes, KeyValue* kv, void* ptr);
+	void static set_mr_params(MapReduce* mr, int pagesize, int timer, int verbosity, int outofcore);
 	void static set_mr_params(MapReduce* mr, int pagesize);
 };
