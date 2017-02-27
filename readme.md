@@ -7,7 +7,7 @@ This library provides functions that are frequently needed when working with MRM
 This functions accepts a pointer to the MapReduce object that contains set of `KV`s (not `KMV`s). It removes the repeated `<key, value>` pairs, retaining only one instance of each such pair. It performs by generating a `<key!value, NULL>` for each `<key, value>`, collating the `KV`s and then extracting again the remaining keys and values from the existing `KV`. Note that `!` is used as a separator between key and value and your original keys should not contain this character (or you can change the separator character from the header file).
 ```c++
 //mr is an instance of MapReduce that contains KVs.
-remove_redundant(mr);
+MrToolbox::remove_redundant(mr);
 ```
 </br>
 **collect_keys:**</br>
@@ -15,7 +15,7 @@ This function collect all the keys presented in the `KMV` and uses the MPI_Gathe
 ```c++
 //mr is an instance of MapReduce that contains KMVs.
 std::vector<char> keys_vector;
-collect_keys(mr, &keys_vector);
+MrToolbox::collect_keys(mr, &keys_vector);
 ```
 </br>
 **set_mr_params:**</br>
@@ -25,5 +25,5 @@ int memsize = 1024;
 int timer = 1;
 int verbosity = 0;
 int outofcore = -1;
-set_mr_params(mr, memsize, timer, verbosity, outofcore);
+MrToolbox::set_mr_params(mr, memsize, timer, verbosity, outofcore);
 ```
