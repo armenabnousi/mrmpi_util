@@ -1,4 +1,5 @@
 #Utility functions for MRMPI library</br>
+**NOTE: The functions in this library are all marked as public since they are used in different parts in my programs ("legacy"), but for your personl use you can keep the main functions described below as public and change the rest to private.**</br>
 </br>
 This library provides functions that are frequently needed when working with MRMPI library (C++ implementation of MapReduce - http://mapreduce.sandia.gov/ ). I write these functions as I find the need for them. They can be updated and/or appended with new utilites anytime. Most of these functions are `static` and can be used without instantiation of an object of this class.</br>
 </br>
