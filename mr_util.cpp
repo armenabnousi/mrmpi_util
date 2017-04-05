@@ -1,5 +1,17 @@
 #include "mr_util.h"
 
+void MrToolbox::gather_kmv(MapReduce* mr, int procs, bool convert) {
+	mr -> reduce(convert_kmv_to_kv, NULL);
+	mr -> gather(procs);
+	if (convert) mr -> convert();
+}
+
+void MrToolbox::convert_kmv_to_kv(char* key, int keybytes, char* values, int nvalues, int* valuebytes, KeyValue* kv, void* ptr) {
+	for (int i = 0, offset = 0; i < nvalues; offset += valuebytes[i], i++) {
+		kv -> add(key, keybytes, values + offset, valuebytes[i]);
+	}
+}
+
 void MrToolbox::collect_keys(MapReduce* mr, std::vector<char>* collected_keys) {
 	int me, nprocs;
 	MPI_Comm_rank(MPI_COMM_WORLD, &me);
@@ -99,14 +111,14 @@ void MrToolbox::redundant_remover(char* key, int keybytes, char* values, int nva
         memcpy(splitted_val, key + separator_pos + 1, keybytes - separator_pos - 1);
         kv -> add(splitted_key, separator_pos, splitted_val, keybytes - separator_pos - 1);
 }
-
+/*
 void MrToolbox::set_mr_params(MapReduce* mr, int pagesize, int timer, int verbosity, int outofcore) {
 	mr -> memsize = pagesize;
 	mr -> verbosity = verbosity;
 	mr -> timer = timer;
 	mr -> outofcore = outofcore;
 }
-
+*/
 void MrToolbox::set_mr_params(MapReduce* mr, int pagesize) {
 	//if (pagesize > 1024) pagesize = 1024;
 	mr -> verbosity = 0;
