@@ -10,7 +10,7 @@ This functions accepts a pointer to the MapReduce object that contains set of `K
 //mr is an instance of MapReduce that contains KVs.
 MrToolbox::remove_redundant(mr);
 ```
-</br>
+
 **collect_keys:**</br>
 This function collect all the keys presented in the `KMV` and uses the MPI_Gatherv fuction to collect them all in a root processor. The collected keys will be inserted in a std::vector<char> that you will pass in a reference to it as an output argument.
 ```c++
@@ -18,7 +18,7 @@ This function collect all the keys presented in the `KMV` and uses the MPI_Gathe
 std::vector<char> keys_vector;
 MrToolbox::collect_keys(mr, &keys_vector);
 ```
-</br>
+
 **set_mr_params:**</br>
 This function sets some of the parameters described in the `Settings` section of the MRMPI documentation. These parameters are memsize, ourofcore, verbosity and timer, as described in the documnetation.
 ```c++
@@ -28,7 +28,7 @@ int verbosity = 0;
 int outofcore = -1;
 MrToolbox::set_mr_params(mr, memsize, timer, verbosity, outofcore);
 ```
-</br>
+
 **gather_kmv:**</br>
 This function simulates the `gather(int)` method from the MapReduce library which originally works only on KeyValue objects, for KeyMultiValue objects. It extracts KeyValue pairs from the given MapReduce object containing KeyMultiValues, and then uses the original `gather(int)` function using the provided number of processors (default 1) to collect all the key-values in the desired number of processors. The last parameter is a boolean (default true), which if true means the function will convert the collected key-values back into KeyMultiValue objects (using the `convert()` method of the MapReduce library.
 ```c++
