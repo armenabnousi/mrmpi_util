@@ -1,12 +1,19 @@
 #include "mr_util.h"
 
-void MrToolbox::gather_kmv(MapReduce* mr, int procs, bool convert) {
-	mr -> reduce(convert_kmv_to_kv, NULL);
+void MrToolbox::gather_kmv(MapReduce* mr, int procs, bool convert, int* num_kmvs, int* num_kvs) {
+	int n_kmvs = 0, n_kvs = 0;
+	n_kvs = mr -> reduce(convert_kmv_to_kv, &n_kmvs);
 	mr -> gather(procs);
 	if (convert) mr -> convert();
+	if (num_kmvs) {
+		*num_kmvs = n_kmvs;
+		*num_kvs = n_kvs;
+	}
 }
 
-void MrToolbox::convert_kmv_to_kv(char* key, int keybytes, char* values, int nvalues, int* valuebytes, KeyValue* kv, void* ptr) {
+void MrToolbox::convert_kmv_to_kv(char* key, int keybytes, char* values, int nvalues, int* valuebytes, KeyValue* kv, void* int_ptr) {
+	int* num_kmv = (int*) int_ptr;
+	*num_kmv = *num_kmv + 1;
 	for (int i = 0, offset = 0; i < nvalues; offset += valuebytes[i], i++) {
 		kv -> add(key, keybytes, values + offset, valuebytes[i]);
 	}

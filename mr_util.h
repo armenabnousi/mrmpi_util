@@ -17,7 +17,7 @@ typedef struct CollectionContainer {
 class MrToolbox {
 
 public:
-	void static gather_kmv(MapReduce* mr, int procs = 1, bool convert = true);
+	void static gather_kmv(MapReduce* mr, int procs = 1, bool convert = true, int* num_kmvs = NULL, int* num_kvs = NULL);
 	void static collect_keys(MapReduce* mr, std::vector<char>* collection);
 	void static remove_redundant(MapReduce* mr);
 	void static collect_local_keys(char* key, int keybytes, char* values, int nvalues, int* valuebytes, void* toolbox_ptr);
@@ -27,5 +27,5 @@ public:
 	//void static set_mr_params(MapReduce* mr, int pagesize, int timer, int verbosity, int outofcore);
 	void static set_mr_params(MapReduce* mr, int pagesize);
 private:
-	void static convert_kmv_to_kv(char* key, int keybytes, char* values, int nvalues, int* valuebytes, KeyValue* kv, void* ptr);
+	void static convert_kmv_to_kv(char* key, int keybytes, char* values, int nvalues, int* valuebytes, KeyValue* kv, void* int_ptr);
 };

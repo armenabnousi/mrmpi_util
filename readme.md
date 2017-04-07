@@ -30,9 +30,10 @@ MrToolbox::set_mr_params(mr, memsize, timer, verbosity, outofcore);
 ```
 
 **gather_kmv:**</br>
-This function simulates the `gather(int)` method from the MapReduce library which originally works only on KeyValue objects, for KeyMultiValue objects. It extracts KeyValue pairs from the given MapReduce object containing KeyMultiValues, and then uses the original `gather(int)` function using the provided number of processors (default 1) to collect all the key-values in the desired number of processors. The last parameter is a boolean (default true), which if true means the function will convert the collected key-values back into KeyMultiValue objects (using the `convert()` method of the MapReduce library.
+This function simulates the `gather(int)` method from the MapReduce library which originally works only on KeyValue objects, for KeyMultiValue objects. It extracts KeyValue pairs from the given MapReduce object containing KeyMultiValues, and then uses the original `gather(int)` function using the provided number of processors (default 1) to collect all the key-values in the desired number of processors. The last parameter is a boolean (default true), which if true means the function will convert the collected key-values back into KeyMultiValue objects (using the `convert()` method of the MapReduce library. The function also can accept two integer pointers that will return number of KeyValues and number of KeyMultiValues in the MapReduce object.
 ```c++
 mr -> reduce(some_function, NULL); //to generate KeyMultiValue objects
-MrToolbox::gather_kmv(mr, 1, true);
+int n_kmv, n_kv;
+MrToolbox::gather_kmv(mr, 1, true, &n_kmv, &n_kv);
 //All keyMultiValues are gathered in processor 0
 ```
