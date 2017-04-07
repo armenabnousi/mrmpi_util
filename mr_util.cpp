@@ -4,7 +4,8 @@ void MrToolbox::gather_kmv(MapReduce* mr, int procs, bool convert, int* num_kmvs
 	int n_kmvs = 0, n_kvs = 0;
 	n_kvs = mr -> reduce(convert_kmv_to_kv, &n_kmvs);
 	mr -> gather(procs);
-	if (convert) mr -> convert();
+	if (convert) n_kmvs = mr -> convert();
+	else MPI_Allreduce(&n_kmvs, num_kmvs, 1, MPI_INT, MPI_SUM, MPI_COMM_WORLD);
 	if (num_kmvs) {
 		*num_kmvs = n_kmvs;
 		*num_kvs = n_kvs;
